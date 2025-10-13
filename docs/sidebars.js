@@ -26,6 +26,11 @@ const sidebars = {
       label: '⚖️ vs Alternatives',
     },
     {
+      type: 'doc',
+      id: 'library-vs-framework',
+      label: '📚 Library vs Framework',
+    },
+    {
       type: 'category',
       label: '📖 Usage Examples',
       items: [
@@ -66,8 +71,6 @@ const sidebars = {
       label: '🔄 Migration Guides',
       items: [
         'migration/from-okhttp',
-        'migration-guide',
-        'migration-guide-v12',
       ],
     },
     {

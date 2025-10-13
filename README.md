@@ -297,3 +297,7 @@ MIT License - Free to use, modify, and distribute
 **Made with ❤️ by the MochaAPI Team**
 
 **Star ⭐ this repository if you find it useful!**
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=MochaAPI/MochaJSON&type=Date)](https://star-history.com/#MochaAPI/MochaJSON&Date)

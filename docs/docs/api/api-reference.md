@@ -18,8 +18,8 @@ Static entry point for simple HTTP requests with production-safe defaults.
 | `delete(String url)` | Create DELETE request | `url` - Target URL | `ApiRequest` |
 | `patch(String url)` | Create PATCH request | `url` - Target URL | `ApiRequest` |
 | `execute(ApiRequest request)` | Execute request synchronously | `request` - Configured request | `ApiResponse` |
-| `executeAsync(ApiRequest request)` | Execute request asynchronously | `request` - Configured request | `CompletableFuture<ApiResponse>` |
-| `executeAsync(ApiRequest request, Consumer<ApiResponse> callback)` | Execute request asynchronously with callback | `request` - Configured request, `callback` - Response handler | `void` |
+| `executeAsync(ApiRequest request)` | Execute request asynchronously | `request` - Configured request | `CompletableFuture&lt;ApiResponse&gt;` |
+| `executeAsync(ApiRequest request, Consumer&lt;ApiResponse&gt; callback)` | Execute request asynchronously with callback | `request` - Configured request, `callback` - Response handler | `void` |
 
 #### Example Usage
 
@@ -55,8 +55,8 @@ Advanced HTTP client with configurable timeouts, interceptors, and logging. Each
 | `delete(String url)` | Create DELETE request | `url` - Target URL | `ApiRequest` |
 | `patch(String url)` | Create PATCH request | `url` - Target URL | `ApiRequest` |
 | `execute(ApiRequest request)` | Execute request synchronously | `request` - Configured request | `ApiResponse` |
-| `executeAsync(ApiRequest request)` | Execute request asynchronously | `request` - Configured request | `CompletableFuture<ApiResponse>` |
-| `executeAsync(ApiRequest request, Consumer<ApiResponse> callback)` | Execute request asynchronously with callback | `request` - Configured request, `callback` - Response handler | `void` |
+| `executeAsync(ApiRequest request)` | Execute request asynchronously | `request` - Configured request | `CompletableFuture&lt;ApiResponse&gt;` |
+| `executeAsync(ApiRequest request, Consumer&lt;ApiResponse&gt; callback)` | Execute request asynchronously with callback | `request` - Configured request, `callback` - Response handler | `void` |
 | `getSecurityConfig()` | Get security configuration | None | `SecurityConfig` |
 
 #### Builder Class
@@ -69,8 +69,8 @@ Advanced HTTP client with configurable timeouts, interceptors, and logging. Each
 | `allowLocalhost(boolean allow)` | Allow localhost URLs | `allow` - Whether to allow localhost | `Builder` |
 | `enableRetry()` | Enable retry with 3 attempts | None | `Builder` |
 | `enableLogging()` | Enable console logging | None | `Builder` |
-| `requestInterceptor(Consumer<ApiRequest> interceptor)` | Add request interceptor | `interceptor` - Request interceptor | `Builder` |
-| `responseInterceptor(Consumer<ApiResponse> interceptor)` | Add response interceptor | `interceptor` - Response interceptor | `Builder` |
+| `requestInterceptor(Consumer&lt;ApiRequest&gt; interceptor)` | Add request interceptor | `interceptor` - Request interceptor | `Builder` |
+| `responseInterceptor(Consumer&lt;ApiResponse&gt; interceptor)` | Add response interceptor | `interceptor` - Response interceptor | `Builder` |
 | `engine(HttpClientEngine engine)` | Set custom HTTP engine | `engine` - Custom engine | `Builder` |
 | `executor(Executor executor)` | Set custom executor | `executor` - Custom executor | `Builder` |
 | `build()` | Build ApiClient | None | `ApiClient` |
@@ -94,7 +94,7 @@ Map<String, Object> data = client.get("https://api.example.com/data")
 ```
 
 // Async usage
-CompletableFuture<ApiResponse> future = client.get("https://api.example.com/data")
+CompletableFuture&lt;ApiResponse&gt; future = client.get("https://api.example.com/data")
     .executeAsync();
 ```
 
@@ -112,8 +112,8 @@ Interface for intercepting and modifying HTTP requests before they are sent.
 
 | Method | Description | Parameters | Returns |
 |--------|-------------|------------|---------|
-| `logging(Consumer<String> logger)` | Create logging interceptor | `logger` - Logger function | `RequestInterceptor` |
-| `bearerAuth(Supplier<String> tokenProvider)` | Create auth interceptor | `tokenProvider` - Token provider | `RequestInterceptor` |
+| `logging(Consumer&lt;String&gt; logger)` | Create logging interceptor | `logger` - Logger function | `RequestInterceptor` |
+| `bearerAuth(Supplier&lt;String&gt; tokenProvider)` | Create auth interceptor | `tokenProvider` - Token provider | `RequestInterceptor` |
 | `addHeaders(Map<String, String> headers)` | Create header interceptor | `headers` - Headers to add | `RequestInterceptor` |
 
 #### Example Usage
@@ -146,7 +146,7 @@ Interface for intercepting and modifying HTTP responses after they are received.
 
 | Method | Description | Parameters | Returns |
 |--------|-------------|------------|---------|
-| `logging(Consumer<String> logger)` | Create logging interceptor | `logger` - Logger function | `ResponseInterceptor` |
+| `logging(Consumer&lt;String&gt; logger)` | Create logging interceptor | `logger` - Logger function | `ResponseInterceptor` |
 | `throwOnError()` | Create error handling interceptor | None | `ResponseInterceptor` |
 | `retryOnStatus(int[] codes, int maxRetries)` | Create retry interceptor | `codes` - Retryable status codes, `maxRetries` - Max retries | `ResponseInterceptor` |
 
@@ -182,8 +182,8 @@ Main entry point for creating HTTP requests.
 | `delete(String url)` | Create DELETE request | `url` - Target URL | `ApiRequest` |
 | `patch(String url)` | Create PATCH request | `url` - Target URL | `ApiRequest` |
 | `execute(ApiRequest request)` | Execute request synchronously | `request` - Configured request | `ApiResponse` |
-| `executeAsync(ApiRequest request)` | Execute request asynchronously | `request` - Configured request | `CompletableFuture<ApiResponse>` |
-| `executeAsync(ApiRequest request, Consumer<ApiResponse> callback)` | Execute request asynchronously with callback | `request` - Configured request, `callback` - Response handler | `void` |
+| `executeAsync(ApiRequest request)` | Execute request asynchronously | `request` - Configured request | `CompletableFuture&lt;ApiResponse&gt;` |
+| `executeAsync(ApiRequest request, Consumer&lt;ApiResponse&gt; callback)` | Execute request asynchronously with callback | `request` - Configured request, `callback` - Response handler | `void` |
 
 #### Example Usage
 
@@ -211,8 +211,8 @@ Fluent interface for building HTTP requests.
 | `query(String name, Object value)` | Add query parameter | `name` - Parameter name, `value` - Parameter value | `ApiRequest` |
 | `body(Object body)` | Set request body | `body` - Request body (String, Map, or Object) | `ApiRequest` |
 | `execute()` | Execute request synchronously | None | `ApiResponse` |
-| `executeAsync()` | Execute request asynchronously | None | `CompletableFuture<ApiResponse>` |
-| `async(Consumer<ApiResponse> callback)` | Execute request asynchronously with callback | `callback` - Response handler | `void` |
+| `executeAsync()` | Execute request asynchronously | None | `CompletableFuture&lt;ApiResponse&gt;` |
+| `async(Consumer&lt;ApiResponse&gt; callback)` | Execute request asynchronously with callback | `callback` - Response handler | `void` |
 
 #### Getters
 
@@ -249,9 +249,9 @@ Container for HTTP response data with JSON parsing capabilities.
 | `body()` | Get response body as string | None | `String` |
 | `headers()` | Get response headers | None | `Map<String, String>` |
 | `json()` | Get JSON mapper instance | None | `JsonMapper` |
-| `to(Class<T> type)` | Parse JSON to specified type | `type` - Target class | `T` |
+| `to(Class&lt;T&gt; type)` | Parse JSON to specified type | `type` - Target class | `T` |
 | `toMap()` | Parse JSON to Map | None | `Map<String, Object>` |
-| `toList()` | Parse JSON to List | None | `List<Object>` |
+| `toList()` | Parse JSON to List | None | `List&lt;Object&gt;` |
 | `isSuccess()` | Check if status is 200-299 | None | `boolean` |
 | `isError()` | Check if status is 400+ | None | `boolean` |
 
@@ -268,7 +268,7 @@ Map<String, String> headers = response.headers();
 // JSON parsing
 User user = response.to(User.class);
 Map<String, Object> data = response.toMap();
-List<Object> items = response.toList();
+List&lt;Object&gt; items = response.toList();
 
 // Status checking
 if (response.isSuccess()) {
@@ -289,9 +289,9 @@ Interface for JSON serialization and deserialization.
 | Method | Description | Parameters | Returns |
 |--------|-------------|------------|---------|
 | `stringify(Object obj)` | Convert object to JSON string | `obj` - Object to serialize | `String` |
-| `parse(String json, Class<T> type)` | Parse JSON string to object | `json` - JSON string, `type` - Target class | `T` |
+| `parse(String json, Class&lt;T&gt; type)` | Parse JSON string to object | `json` - JSON string, `type` - Target class | `T` |
 | `toMap(String json)` | Parse JSON string to Map | `json` - JSON string | `Map<String, Object>` |
-| `toList(String json)` | Parse JSON string to List | `json` - JSON string | `List<Object>` |
+| `toList(String json)` | Parse JSON string to List | `json` - JSON string | `List&lt;Object&gt;` |
 
 #### Example Usage
 
@@ -306,7 +306,7 @@ User user = mapper.parse(jsonString, User.class);
 
 // Parse JSON to Map/List
 Map<String, Object> map = mapper.toMap(jsonString);
-List<Object> list = mapper.toList(jsonString);
+List&lt;Object&gt; list = mapper.toList(jsonString);
 ```
 
 ### `JacksonJsonMapper` Class
