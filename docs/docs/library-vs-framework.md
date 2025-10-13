@@ -1,6 +1,6 @@
 ---
-title: Library vs Framework: Why MochaJSON is 1000% Library
-description: Understanding the philosophy behind MochaJSON v1.0.0's pure library design and why it's better than framework-like approaches.
+title: "Library vs Framework: Why MochaJSON is 1000% Library"
+description: "Understanding the philosophy behind MochaJSON v1.0.0's pure library design and why it's better than framework-like approaches."
 keywords:
   - library vs framework
   - stateless design
