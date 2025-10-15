@@ -14,6 +14,9 @@ import java.util.regex.Pattern;
  */
 public class Utils {
     
+    /** Private constructor to prevent instantiation. */
+    private Utils() {}
+    
     // Pattern to match dangerous URL schemes that could be used for open redirects
     private static final Pattern DANGEROUS_SCHEMES = Pattern.compile(
         "^(javascript|data|vbscript|file|ftp):", Pattern.CASE_INSENSITIVE);

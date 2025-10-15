@@ -17,6 +17,9 @@ import java.util.UUID;
  */
 public class MultipartBodyBuilder {
     
+    /** Private constructor to prevent instantiation. */
+    private MultipartBodyBuilder() {}
+    
     private static final String BOUNDARY_PREFIX = "----MochaAPI-";
     private static final String CRLF = "\r\n";
     private static final long DEFAULT_MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB default limit

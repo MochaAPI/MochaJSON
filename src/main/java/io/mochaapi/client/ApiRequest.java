@@ -277,10 +277,39 @@ public class ApiRequest {
     }
     
     // Getters for internal use
+    /**
+     * Gets the request URL.
+     * @return the request URL
+     */
     public String getUrl() { return url; }
+    
+    /**
+     * Gets the HTTP method.
+     * @return the HTTP method
+     */
     public String getMethod() { return method; }
+    
+    /**
+     * Gets the request headers.
+     * @return the request headers
+     */
     public Map<String, String> getHeaders() { return headers; }
+    
+    /**
+     * Gets the query parameters.
+     * @return the query parameters
+     */
     public Map<String, Object> getQueryParams() { return queryParams; }
+    
+    /**
+     * Gets the request body.
+     * @return the request body
+     */
     public Object getBody() { return body; }
+    
+    /**
+     * Checks if this is a multipart request.
+     * @return true if this is a multipart request
+     */
     public boolean isMultipart() { return isMultipart; }
 }

@@ -24,6 +24,9 @@ import java.util.function.Consumer;
  */
 public class Api {
     
+    /** Private constructor to prevent instantiation. */
+    private Api() {}
+    
     private static final HttpClientEngine DEFAULT_ENGINE = new DefaultHttpClientEngine();
     private static final Executor DEFAULT_EXECUTOR = createDefaultExecutor();
     

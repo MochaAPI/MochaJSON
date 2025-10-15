@@ -202,6 +202,9 @@ public class ApiClient {
      * Builder class for creating configured ApiClient instances.
      */
     public static class Builder {
+        
+        /** Creates a new Builder instance. */
+        public Builder() {}
         private HttpClientEngine engine;
         private Executor executor;
         private Duration connectTimeout = Duration.ofSeconds(30);

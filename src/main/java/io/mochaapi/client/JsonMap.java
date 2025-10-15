@@ -14,8 +14,8 @@ import java.util.Map;
  * ApiResponse response = Api.get("https://api.example.com/user").execute();
  * 
  * // Traditional approach (verbose with casting)
- * Map<String, Object> data = response.toMap();
- * String city = ((Map<String, Object>)((Map<String, Object>)data.get("user")).get("address")).get("city").toString();
+ * Map&lt;String, Object&gt; data = response.toMap();
+ * String city = ((Map&lt;String, Object&gt;)((Map&lt;String, Object&gt;)data.get("user")).get("address")).get("city").toString();
  * 
  * // JsonMap approach (clean chaining)
  * String city = response.toJsonMap().get("user").get("address").get("city").toString();
@@ -29,6 +29,7 @@ import java.util.Map;
  */
 public class JsonMap extends HashMap<String, Object> {
 
+    /** Internal field to wrap primitive values for chaining. */
     private Object wrappedValue = null;
 
     /**
