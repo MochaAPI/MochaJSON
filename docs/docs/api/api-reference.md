@@ -251,6 +251,7 @@ Container for HTTP response data with JSON parsing capabilities.
 | `json()` | Get JSON mapper instance | None | `JsonMapper` |
 | `to(Class&lt;T&gt; type)` | Parse JSON to specified type | `type` - Target class | `T` |
 | `toMap()` | Parse JSON to Map | None | `Map<String, Object>` |
+| `toJsonMap()` | Parse JSON to chainable JsonMap | None | `JsonMap` |
 | `toList()` | Parse JSON to List | None | `List&lt;Object&gt;` |
 | `isSuccess()` | Check if status is 200-299 | None | `boolean` |
 | `isError()` | Check if status is 400+ | None | `boolean` |
@@ -268,6 +269,7 @@ Map<String, String> headers = response.headers();
 // JSON parsing
 User user = response.to(User.class);
 Map<String, Object> data = response.toMap();
+JsonMap json = response.toJsonMap();
 List&lt;Object&gt; items = response.toList();
 
 // Status checking
@@ -276,6 +278,37 @@ if (response.isSuccess()) {
 } else if (response.isError()) {
     System.out.println("Request failed: " + response.code());
 }
+```
+
+### `JsonMap` Class
+
+Chainable wrapper for JSON data that eliminates casting boilerplate when accessing nested objects.
+
+#### Constructors
+
+| Constructor | Description | Parameters |
+|-------------|-------------|------------|
+| `JsonMap(Map<String, Object> map)` | Create JsonMap from Map | `map` - Map to wrap |
+
+#### Methods
+
+| Method | Description | Parameters | Returns |
+|--------|-------------|------------|---------|
+| `get(String key)` | Get value with chainable access | `key` - Key to retrieve | `JsonMap` |
+| `toString()` | Get string representation | None | `String` |
+
+#### Example Usage
+
+```java
+JsonMap json = response.toJsonMap();
+
+// Chainable nested access
+String city = json.get("data").get("location").get("city").toString();
+String latitude = json.get("data").get("location").get("coordinates").get("latitude").toString();
+
+// Intermediate access
+JsonMap user = json.get("data").get("user");
+String name = user.get("name").get("first").toString();
 ```
 
 ## JSON Mapping

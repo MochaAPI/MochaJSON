@@ -45,6 +45,112 @@ Post post = Api.get("https://jsonplaceholder.typicode.com/posts/1")
 System.out.println("Title: " + post.title);
 ```
 
+## Chainable JSON Access with JsonMap
+
+When working with deeply nested JSON responses, the traditional approach requires multiple explicit casts to `Map<String, Object>`, which creates verbose and error-prone code. JsonMap provides a clean, chainable alternative.
+
+### The Problem: Casting Boilerplate
+
+```java
+// Traditional approach - verbose and error-prone
+Map<String, Object> response = Api.get("https://api.example.com/user").execute().toMap();
+
+// Accessing nested data requires multiple casts
+String city = ((Map<String, Object>)((Map<String, Object>)response.get("data"))
+    .get("location")).get("city").toString();
+
+String latitude = ((Map<String, Object>)((Map<String, Object>)((Map<String, Object>)response.get("data"))
+    .get("location")).get("coordinates")).get("latitude").toString();
+```
+
+### The Solution: JsonMap Chaining
+
+```java
+// JsonMap approach - clean and readable
+JsonMap json = Api.get("https://api.example.com/user").execute().toJsonMap();
+
+// Clean chaining without casting
+String city = json.get("data").get("location").get("city").toString();
+String latitude = json.get("data").get("location").get("coordinates").get("latitude").toString();
+```
+
+### Real-World Example
+
+Consider this nested JSON response from a user API:
+
+```json
+{
+  "statusCode": 200,
+  "data": {
+    "name": {
+      "title": "Ms",
+      "first": "Kitty",
+      "last": "Wallace"
+    },
+    "location": {
+      "street": {
+        "number": 1103,
+        "name": "Valley View Ln"
+      },
+      "city": "Bridgeport",
+      "state": "Minnesota",
+      "country": "United States",
+      "coordinates": {
+        "latitude": "-64.0863",
+        "longitude": "-155.0095"
+      }
+    },
+    "email": "kitty.wallace@example.com"
+  },
+  "success": true
+}
+```
+
+**Traditional approach:**
+```java
+Map<String, Object> response = Api.get("https://api.example.com/user").execute().toMap();
+Map<String, Object> data = (Map<String, Object>) response.get("data");
+Map<String, Object> name = (Map<String, Object>) data.get("name");
+Map<String, Object> location = (Map<String, Object>) data.get("location");
+Map<String, Object> street = (Map<String, Object>) location.get("street");
+Map<String, Object> coordinates = (Map<String, Object>) location.get("coordinates");
+
+String fullName = name.get("first") + " " + name.get("last");
+String address = street.get("number") + " " + street.get("name") + ", " + location.get("city");
+String lat = coordinates.get("latitude").toString();
+```
+
+**JsonMap approach:**
+```java
+JsonMap json = Api.get("https://api.example.com/user").execute().toJsonMap();
+
+String fullName = json.get("data").get("name").get("first") + " " + json.get("data").get("name").get("last");
+String address = json.get("data").get("location").get("street").get("number") + " " + 
+                 json.get("data").get("location").get("street").get("name") + ", " + 
+                 json.get("data").get("location").get("city");
+String lat = json.get("data").get("location").get("coordinates").get("latitude").toString();
+```
+
+### Benefits of JsonMap
+
+1. **Eliminates casting boilerplate** - No more explicit `(Map<String, Object>)` casts
+2. **Prevents unchecked cast warnings** - Type-safe access to nested data
+3. **Improves readability** - Clean, chainable syntax that reads naturally
+4. **Reduces errors** - No risk of ClassCastException from incorrect casting
+5. **Seamless integration** - Works alongside existing `toMap()` and `to()` methods
+
+### Kotlin Usage
+
+```kotlin
+import io.mochaapi.client.*
+
+val json = Api.get("https://api.example.com/user").execute().toJsonMap()
+
+val fullName = "${json.get("data").get("name").get("first")} ${json.get("data").get("name").get("last")}"
+val city = json.get("data").get("location").get("city").toString()
+val latitude = json.get("data").get("location").get("coordinates").get("latitude").toString()
+```
+
 ## Nested Object Parsing
 
 ### Java Example

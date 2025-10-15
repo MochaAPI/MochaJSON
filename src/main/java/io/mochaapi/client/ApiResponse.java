@@ -89,6 +89,30 @@ public class ApiResponse {
     public Map<String, Object> toMap() {
         return jsonMapper.toMap(body);
     }
+
+    // Returns a new JsonMap representation of the response body for convenient dot-style access.
+    // Example: response.toJsonMap().get("user").get("name").get("first");
+    // See: src/main/java/io/mochaapi/client/JsonMap
+    /**
+     * Converts the response body to a {@link JsonMap} for convenient dot-style property access.
+     * <p>
+     * Example usage:
+     * <pre>
+     * JsonMap user = response.toJsonMap().get("user");
+     * String firstName = user.get("name").get("first").toString();
+     * </pre>
+     * <p>
+     * The {@code JsonMap} wrapper allows chainable {@code get()} calls that automatically
+     * wrap nested {@code Map}s without unchecked casts.
+     * <p>
+     * See {@link io.mochaapi.client.JsonMap} for usage semantics.
+     *
+     * @return a JsonMap representing the response body
+     * @throws JsonException if parsing fails or the body is not valid JSON
+     */
+    public JsonMap toJsonMap() {
+    return new JsonMap(jsonMapper.toMap(body));
+    }
     
     /**
      * Converts the response body to a List.

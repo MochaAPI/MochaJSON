@@ -560,6 +560,76 @@ fun main() {
 }
 ```
 
+### Nested JSON Access with JsonMap
+
+JsonMap provides a clean, chainable API for accessing nested JSON data without casting boilerplate.
+
+```kotlin
+import io.mochaapi.client.*
+
+fun main() {
+    try {
+        // Example: User profile API with nested data
+        val json = Api.get("https://api.example.com/user/123")
+            .execute()
+            .toJsonMap()
+        
+        // Traditional approach (verbose with casting)
+        val data = json.toMap()
+        val user = data["data"] as Map<String, Any>
+        val name = user["name"] as Map<String, Any>
+        val location = user["location"] as Map<String, Any>
+        val street = location["street"] as Map<String, Any>
+        val coordinates = location["coordinates"] as Map<String, Any>
+        
+        val traditionalName = "${name["first"]} ${name["last"]}"
+        val traditionalAddress = "${street["number"]} ${street["name"]}, ${location["city"]}"
+        val traditionalLat = coordinates["latitude"].toString()
+        
+        // JsonMap approach (clean chaining)
+        val cleanName = "${json.get("data").get("name").get("first")} ${json.get("data").get("name").get("last")}"
+        val cleanAddress = "${json.get("data").get("location").get("street").get("number")} " +
+                          "${json.get("data").get("location").get("street").get("name")}, " +
+                          "${json.get("data").get("location").get("city")}"
+        val cleanLat = json.get("data").get("location").get("coordinates").get("latitude").toString()
+        
+        println("Name: $cleanName")
+        println("Address: $cleanAddress")
+        println("Latitude: $cleanLat")
+        
+        // Intermediate access for complex operations
+        val userData = json.get("data")
+        val locationData = userData.get("location")
+        
+        val email = userData.get("email").toString()
+        val city = locationData.get("city").toString()
+        val state = locationData.get("state").toString()
+        
+        println("Email: $email")
+        println("Location: $city, $state")
+        
+        // Kotlin extension functions for even cleaner syntax
+        fun JsonMap.safeGet(key: String): String = get(key).toString()
+        
+        val firstName = json.get("data").get("name").safeGet("first")
+        val lastName = json.get("data").get("name").safeGet("last")
+        val fullName = "$firstName $lastName"
+        
+        println("Full name: $fullName")
+        
+    } catch (e: Exception) {
+        println("Error: ${e.message}")
+    }
+}
+```
+
+**Benefits for Kotlin developers:**
+
+- **No casting**: Eliminates `as Map<String, Any>` casts
+- **Null safety**: Works well with Kotlin's null safety features
+- **Extension functions**: Can create custom extension functions for cleaner syntax
+- **Coroutines friendly**: Works seamlessly with async operations
+
 ## Functional Style with Extension Functions
 
 ```kotlin

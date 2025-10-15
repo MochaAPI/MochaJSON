@@ -139,6 +139,70 @@ public class SecurityExample {
 }
 ```
 
+### Nested JSON Access with JsonMap
+
+When working with deeply nested API responses, JsonMap eliminates the need for verbose casting and provides a clean, chainable API.
+
+```java
+import io.mochaapi.client.*;
+
+public class JsonMapExample {
+    public static void main(String[] args) {
+        try {
+            // Example: User profile API with nested data
+            JsonMap response = Api.get("https://api.example.com/user/123")
+                .execute()
+                .toJsonMap();
+            
+            // Traditional approach (verbose with casting)
+            Map<String, Object> data = response.toMap();
+            Map<String, Object> user = (Map<String, Object>) data.get("data");
+            Map<String, Object> name = (Map<String, Object>) user.get("name");
+            Map<String, Object> location = (Map<String, Object>) user.get("location");
+            Map<String, Object> street = (Map<String, Object>) location.get("street");
+            Map<String, Object> coordinates = (Map<String, Object>) location.get("coordinates");
+            
+            String traditionalName = name.get("first") + " " + name.get("last");
+            String traditionalAddress = street.get("number") + " " + street.get("name") + ", " + location.get("city");
+            String traditionalLat = coordinates.get("latitude").toString();
+            
+            // JsonMap approach (clean chaining)
+            String cleanName = response.get("data").get("name").get("first") + " " + 
+                              response.get("data").get("name").get("last");
+            String cleanAddress = response.get("data").get("location").get("street").get("number") + " " + 
+                                 response.get("data").get("location").get("street").get("name") + ", " + 
+                                 response.get("data").get("location").get("city");
+            String cleanLat = response.get("data").get("location").get("coordinates").get("latitude").toString();
+            
+            System.out.println("Name: " + cleanName);
+            System.out.println("Address: " + cleanAddress);
+            System.out.println("Latitude: " + cleanLat);
+            
+            // Intermediate access for complex operations
+            JsonMap userData = response.get("data");
+            JsonMap locationData = userData.get("location");
+            
+            String email = userData.get("email").toString();
+            String city = locationData.get("city").toString();
+            String state = locationData.get("state").toString();
+            
+            System.out.println("Email: " + email);
+            System.out.println("Location: " + city + ", " + state);
+            
+        } catch (ApiException | JsonException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Benefits of JsonMap:**
+
+- **No casting boilerplate**: Eliminates `(Map<String, Object>)` casts
+- **Type safety**: Prevents ClassCastException errors
+- **Readable code**: Chainable syntax reads naturally
+- **Flexible access**: Supports both direct chaining and intermediate variables
+
 ### Multiple Clients Pattern
 
 ```java

@@ -122,6 +122,17 @@ fun main() {
 }
 ```
 
+**Chainable JSON Access:**
+```java
+import io.mochaapi.client.*;
+
+// Clean nested JSON access without casting
+String city = Api.get("https://api.example.com/user/123")
+    .execute()
+    .toJsonMap()
+    .get("data").get("location").get("city").toString();
+```
+
 ## Core Capabilities
 
 **Production-Ready Features:**
@@ -208,7 +219,7 @@ MochaJSON is open source and free to use. If it helps your project, consider spo
 ### 🏢 Corporate Sponsorship
 
 For enterprise support, custom features, or bulk licensing, contact us at:
-- 📧 Email: sponsors@mochaapi.org
+- 📧 Email: kashvi0712@proton.me
 - 💼 GitHub: [Enterprise Contact](https://github.com/MochaAPI)
 
 ## Comparison with Alternatives
